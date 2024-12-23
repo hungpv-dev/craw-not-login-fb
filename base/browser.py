@@ -5,13 +5,14 @@ import tempfile
 
 class Browser:
     def __init__(self,account = 'hung'):
+        self.account = account
         self.profile_dir = tempfile.mkdtemp(prefix=f"account_{account}_")
         
     def start(self):
         chrome_options = Options()
-        chrome_options.add_argument(f"--user-data-dir={self.profile_dir}")
+        if self.account != 'hung':
+            chrome_options.add_argument(f"--user-data-dir={self.profile_dir}")
         # Cấu hình các tùy chọn cho Chrome
-        chrome_options.add_argument(f"--user-data-dir={self.profile_dir}")
         chrome_options.add_argument("--disable-notifications")  # Tắt thông báo quyền cấp quyền (notifications)
         chrome_options.add_argument("--disable-geolocation")    # Tắt quyền truy cập vị trí
         chrome_options.add_argument("--use-fake-ui-for-media-stream")  # Giả lập media stream
@@ -24,3 +25,9 @@ class Browser:
         service = Service('chromedriver.exe') 
         browser = webdriver.Chrome(service=service,options=chrome_options)
         return browser
+    
+    def cleanup(self):
+        """Xóa thư mục tạm nếu được tạo."""
+        if self.profile_dir:
+            import shutil
+            shutil.rmtree(self.profile_dir, ignore_errors=True)

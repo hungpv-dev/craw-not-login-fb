@@ -11,10 +11,10 @@ from helpers.inp import get_user_input
 
 def process_crawl():
     browser = None
-    browserStart = None
+    manager = None
     try:
-        browserStart = Browser()
-        browser = browserStart.start()
+        manager = Browser()
+        browser = manager.start()
         browser.get("https://facebook.com")
         crawl = CrawlId(browser)
         crawl.handle()
@@ -24,8 +24,7 @@ def process_crawl():
     finally:
         if browser:
             browser.quit()
-        if browserStart and os.path.exists(browserStart.profile_dir):
-            shutil.rmtree(browserStart.profile_dir)
+            manager.cleanup()
 
 if __name__ == "__main__":
     try:
