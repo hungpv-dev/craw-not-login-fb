@@ -258,8 +258,8 @@ class Crawl:
             'comments': dataComment
         })
         print(f"Response: {res}")
-        if res['post_id']:
-            self.history_instance.update_count(his['id'],{'type': 'success'})
+        if 'post_id' in res and res['post_id']:
+            self.history_instance.update_count(his['id'], {'type': 'success'})
     
         print("=> Đã lưu thành công!")
         print("\n-----------------------------------------------------\n")
