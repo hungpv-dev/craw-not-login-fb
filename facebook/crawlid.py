@@ -65,6 +65,8 @@ class CrawlId:
     def crawlIdFanpage(self, page, his):
         closeModal(0, self.browser)
         self.browser.execute_script("document.body.style.zoom='0.2';")
+        sleep(1)
+        closeModal(0,self.browser)
         sleep(5)
         name = self.updateInfoFanpage(page)
         print(f'====== {name} ======')
