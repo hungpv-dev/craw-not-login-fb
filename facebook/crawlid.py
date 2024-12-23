@@ -34,8 +34,8 @@ class CrawlId:
             except Exception as e:
                 print(f"Lỗi khi xử lý lấy dữ liệu!: {e}")
                 self.error_instance.insertContent(e)
-                print("Thử lại sau 10s...")
-                sleep(10)
+                print("Thử lại sau 3s...")
+                sleep(3)
           
     def crawl(self):
         while True:
