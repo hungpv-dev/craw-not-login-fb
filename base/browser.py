@@ -1,8 +1,8 @@
-from seleniumwire import webdriver
+from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 import tempfile
-from time import sleep
+
 class Browser:
     def __init__(self,account = 'hung'):
         self.account = account
@@ -15,27 +15,14 @@ class Browser:
             chrome_options.add_argument(f"--user-data-dir={self.profile_dir}")
         chrome_options.add_argument("--disable-notifications") 
         chrome_options.add_argument("--disable-geolocation")
-        chrome_options.add_argument('--ignore-certificate-errors')
-        chrome_options.add_argument('--disable-blink-features=AutomationControlled')
+        chrome_options.add_argument("--use-fake-ui-for-media-stream")
+        chrome_options.add_argument("--disable-popup-blocking") 
+        chrome_options.add_argument("--incognito")
 
         service = Service('chromedriver.exe') 
-        # browser = webdriver.Chrome(service=service,options=chrome_options)
+        browser = webdriver.Chrome(service=service,options=chrome_options)
         
-        proxy_username = '5KFr01yS823ZxMd'
-        proxy_password = 'cDIeYuzHd9ip9ZC'
-        proxy = "62.164.255.151:49178"
-
-        sw_options = {
-            'proxy': {
-                'http': f'http://{proxy_username}:{proxy_password}@{proxy}',
-                'https': f'https://{proxy_username}:{proxy_password}@{proxy}',
-            }
-        }
-        
-        driver = webdriver.Chrome(service=service,options=chrome_options,seleniumwire_options=sw_options)
-
-        return driver
-        # return browser
+        return browser
     
     def cleanup(self):
         """Xóa thư mục tạm nếu được tạo."""
