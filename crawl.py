@@ -34,6 +34,7 @@ if __name__ == "__main__":
             crawl_process = multiprocessing.Process(target=process_crawl)
             processes.extend([crawl_process])  
             crawl_process.start()
+            sleep(2)
 
         for process in processes:
             process.join()

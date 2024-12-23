@@ -12,18 +12,29 @@ class Browser:
         chrome_options = Options()
         if self.account != 'hung':
             chrome_options.add_argument(f"--user-data-dir={self.profile_dir}")
-        # Cấu hình các tùy chọn cho Chrome
-        chrome_options.add_argument("--disable-notifications")  # Tắt thông báo quyền cấp quyền (notifications)
-        chrome_options.add_argument("--disable-geolocation")    # Tắt quyền truy cập vị trí
-        chrome_options.add_argument("--use-fake-ui-for-media-stream")  # Giả lập media stream
-        chrome_options.add_argument("--disable-popup-blocking")  # Tắt chặn pop-up
-        chrome_options.add_argument("--incognito") # Chạy ẩn dánh
-        # chrome_options.add_argument("--headless")  # Chạy Chrome ở chế độ không giao diện
-        # chrome_options.add_argument("--disable-gpu")  # Tắt GPU (thường cần thiết khi chạy headless trên một số hệ thống)
-        # chrome_options.add_argument("--no-sandbox")  # Tắt sandbox (cần thiết trong môi trường như Docker)
+        chrome_options.add_argument("--disable-notifications") 
+        chrome_options.add_argument("--disable-geolocation")
+        chrome_options.add_argument("--use-fake-ui-for-media-stream")
+        chrome_options.add_argument("--disable-popup-blocking") 
+        chrome_options.add_argument("--incognito")
+        chrome_options.add_argument("--start-maximized")
+        chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36")
+        chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+        chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        chrome_options.add_experimental_option('useAutomationExtension', False)
 
         service = Service('chromedriver.exe') 
         browser = webdriver.Chrome(service=service,options=chrome_options)
+        
+        # Che giấu thuộc tính `webdriver`
+        browser.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument', {
+            'source': '''
+                Object.defineProperty(navigator, 'webdriver', {
+                    get: () => undefined
+                });
+            '''
+        })
+        
         return browser
     
     def cleanup(self):
