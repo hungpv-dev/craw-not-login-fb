@@ -26,6 +26,6 @@ class Browser:
     
     def cleanup(self):
         """Xóa thư mục tạm nếu được tạo."""
-        if self.profile_dir:
+        if hasattr(self, 'profile_dir') and self.profile_dir:
             import shutil
             shutil.rmtree(self.profile_dir, ignore_errors=True)

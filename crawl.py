@@ -5,6 +5,7 @@ import shutil
 from selenium.common.exceptions import WebDriverException
 from base.browser import Browser
 from facebook.crawlid import CrawlId
+from facebook.crawl import Crawl
 from time import sleep
 from helpers.inp import get_user_input
 
@@ -18,6 +19,19 @@ def process_crawl():
         browser.get("https://facebook.com")
         crawl = CrawlId(browser)
         crawl.handle()
+        # page = {
+        #     'id': 1,
+        # }
+        # his = {
+        #     'id': '123',
+        # }
+        # post = {
+        #     'id': 'pfbid02yfirs1pVz5SPBb7BMoxPdDTkTsxNBd6hVhNEFR3bE2ntSyYcAUwANaqGnGC9Vsn4l',
+        #     'link': 'https://www.facebook.com/permalink.php?story_fbid=pfbid02yfirs1pVz5SPBb7BMoxPdDTkTsxNBd6hVhNEFR3bE2ntSyYcAUwANaqGnGC9Vsn4l&id=61558432464057'
+        # }
+        # browser.get(post['link'])
+        # crawl = Crawl(browser)
+        # crawl.crawlContentPost(page,post,his)
         
     except Exception as e:
         print(f"Lỗi trong Crawl: {e}")
